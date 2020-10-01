@@ -49,15 +49,16 @@ public class Percolation {
             numberOfOpenSite++;
         }
 
-        // connect to top or bottom site
+        // connect to virtual top site
         if (row == 1) {
             uf.union(top, xyTo1D(row, col));
         }
 
+        // connect to virtual bottom site
         if (row == number) {
             uf.union(bottom, xyTo1D(row, col));
-        }
-
+        } 
+        
         // connect to all of its adjacent open sites
         if (col > 1 && isOpen(row, col - 1)) {
             uf.union(xyTo1D(row, col - 1), xyTo1D(row, col));
@@ -71,6 +72,14 @@ public class Percolation {
         if (col < number && isOpen(row, col + 1)) {
             uf.union(xyTo1D(row, col + 1), xyTo1D(row, col));
         }
+
+        // In order to fix backwash problem.
+        // Check whether bottom site is full, if it is, connect to virtual bottom site. But it's too slow.
+        // for (int i = 1; i <= number; i++) {
+        //     if (isFull(number, i)) {
+        //         uf.union(bottom, xyTo1D(number, i));
+        //     }
+        // }
 
     }
 
@@ -104,6 +113,5 @@ public class Percolation {
 
     // test client (optional)
     public static void main(String[] args) {
-
     }
 }
