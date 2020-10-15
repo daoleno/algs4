@@ -3,7 +3,7 @@ import edu.princeton.cs.algs4.StdOut;
 
 public class Permutation {
     public static void main(String[] args) {
-        int n = Integer.parseInt(args[0]);
+        int k = Integer.parseInt(args[0]);
         RandomizedQueue<String> queue = new RandomizedQueue<String>();
 
         // Read text
@@ -11,9 +11,21 @@ public class Permutation {
             queue.enqueue(StdIn.readString());
         }
 
-        // Print random item
-        for (int i = 0; i < n; i++) {
-            StdOut.println(queue.sample());
+        // Print random item(repeat)
+        // int upperBound = k < queue.size() ? k : queue.size();
+        // for (int i = 0; i < upperBound; i++) {
+        // StdOut.println(queue.sample());
+        // }
+
+        // Print random item(uniformly)
+        int index = 0;
+        for (String item : queue) {
+            if (index == k) {
+                break;
+            }
+
+            StdOut.println(item);
+            index++;
         }
     }
 }

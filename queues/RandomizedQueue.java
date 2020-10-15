@@ -112,6 +112,9 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
         }
 
         public Item next() {
+            if (!hasNext()) {
+                throw new NoSuchElementException();
+            }
             return shuffledQueue[index++];
         }
 
