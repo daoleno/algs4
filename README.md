@@ -1,4 +1,4 @@
-# Programming Assignments - algs4 
+# Programming Assignments - algs4
 
 Princeton University assignment on programming algorithms.
 
@@ -21,3 +21,11 @@ Solution: [Percolation](percolation/README.md)
 Write a generic data type for a deque and a randomized queue. The goal of this assignment is to implement elementary data structures using arrays and linked lists, and to introduce you to generics and iterators.
 
 Solution: [Queues](queues/README.md)
+
+## Week3 - Collinear Points
+
+![img](https://coursera.cs.princeton.edu/algs4/assignments/collinear/lines2.png)
+
+Write a program to recognize line patterns in a given set of points.
+
+Solution: [Collinear](collinear/README.md)
