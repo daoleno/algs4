@@ -19,27 +19,29 @@ public class BruteCollinearPoints {
                 throw new IllegalArgumentException();
             }
             for (int j = i + 1; j < points.length; j++) {
-                if (points[j] == null || points[i] == points[j]) {
+                if (points[j] == null || points[i].compareTo(points[j]) == 0) {
                     throw new IllegalArgumentException();
                 }
             }
-
         }
-
-        Arrays.sort(points);
+        Point[] tempPoints = new Point[points.length];
+        for (int i = 0; i < points.length; i++) {
+            tempPoints[i] = points[i];
+        }
+        Arrays.sort(tempPoints);
         List<LineSegment> temp = new ArrayList<LineSegment>();
 
-        for (int i = 0; i < points.length; i++) {
-            for (int j = i + 1; j < points.length; j++) {
-                for (int k = j + 1; k < points.length; k++) {
-                    if (points[i].slopeTo(points[j]) != points[i].slopeTo(points[k])) {
+        for (int i = 0; i < tempPoints.length; i++) {
+            for (int j = i + 1; j < tempPoints.length; j++) {
+                for (int k = j + 1; k < tempPoints.length; k++) {
+                    if (tempPoints[i].slopeTo(tempPoints[j]) != tempPoints[i].slopeTo(tempPoints[k])) {
                         continue;
                     }
-                    for (int l = k + 1; l < points.length; l++) {
-                        if (points[i].slopeTo(points[j]) != points[i].slopeTo(points[l])) {
+                    for (int l = k + 1; l < tempPoints.length; l++) {
+                        if (tempPoints[i].slopeTo(tempPoints[j]) != tempPoints[i].slopeTo(tempPoints[l])) {
                             continue;
                         }
-                        temp.add(new LineSegment(points[i], points[l]));
+                        temp.add(new LineSegment(tempPoints[i], tempPoints[l]));
                     }
                 }
             }

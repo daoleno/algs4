@@ -21,22 +21,27 @@ public class FastCollinearPoints {
                 throw new IllegalArgumentException();
             }
             for (int j = i + 1; j < points.length; j++) {
-                if (points[j] == null || points[i] == points[j]) {
+                if (points[j] == null || points[i].compareTo(points[j]) == 0) {
                     throw new IllegalArgumentException();
                 }
             }
         }
-        Arrays.sort(points);
+
         List<LineSegment> temp = new ArrayList<LineSegment>();
         List<Point> collinearPoints = new ArrayList<Point>();
-        Point[] tempPoints = points.clone();
+        // Point[] tempPoints = points.clone();
+        Point[] tempPoints = new Point[points.length];
+        for (int i = 0; i < points.length; i++) {
+            tempPoints[i] = points[i];
+        }
 
         for (Point p : points) {
             Selection.sort(tempPoints, p.slopeOrder());
             collinearPoints.clear();
             collinearPoints.add(p);
+            double curSlope = p.slopeTo(tempPoints[0]);
             for (int i = 1; i < tempPoints.length; i++) {
-                if (p.slopeTo(tempPoints[i]) == p.slopeTo(tempPoints[i - 1])) {
+                if (p.slopeTo(tempPoints[i]) == curSlope) {
                     if (!collinearPoints.contains(tempPoints[i - 1])) {
                         collinearPoints.add(tempPoints[i - 1]);
                     }
@@ -51,6 +56,7 @@ public class FastCollinearPoints {
                 }
                 collinearPoints.clear();
                 collinearPoints.add(p);
+                curSlope = p.slopeTo(tempPoints[i]);
             }
             if (collinearPoints.size() >= 4) {
                 Collections.sort(collinearPoints);
