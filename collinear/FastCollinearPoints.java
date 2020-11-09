@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -25,26 +26,36 @@ public class FastCollinearPoints {
                 }
             }
         }
-        // Arrays.sort(points);
+        Arrays.sort(points);
         List<LineSegment> temp = new ArrayList<LineSegment>();
+        List<Point> collinearPoints = new ArrayList<Point>();
         Point[] tempPoints = points.clone();
 
         for (Point p : points) {
             Selection.sort(tempPoints, p.slopeOrder());
-            List<Point> collinearPoints = new ArrayList<Point>();
+            collinearPoints.clear();
             collinearPoints.add(p);
-            for (int i = 0; i < tempPoints.length - 1; i++) {
-                if (p.slopeTo(tempPoints[i]) == p.slopeTo(tempPoints[i + 1])) {
-                    collinearPoints.add(tempPoints[i]);
-                    collinearPoints.add(tempPoints[i + 1]);
-                } else {
-                    if (collinearPoints.size() >= 4) {
-                        Collections.sort(collinearPoints);
-                        if (p == collinearPoints.get(0)) {
-                            temp.add(new LineSegment(p, collinearPoints.get(collinearPoints.size() - 1)));
-                            break;
-                        }
+            for (int i = 1; i < tempPoints.length; i++) {
+                if (p.slopeTo(tempPoints[i]) == p.slopeTo(tempPoints[i - 1])) {
+                    if (!collinearPoints.contains(tempPoints[i - 1])) {
+                        collinearPoints.add(tempPoints[i - 1]);
                     }
+                    collinearPoints.add(tempPoints[i]);
+                    continue;
+                }
+                if (collinearPoints.size() >= 4) {
+                    Collections.sort(collinearPoints);
+                    if (p == collinearPoints.get(0)) {
+                        temp.add(new LineSegment(p, collinearPoints.get(collinearPoints.size() - 1)));
+                    }
+                }
+                collinearPoints.clear();
+                collinearPoints.add(p);
+            }
+            if (collinearPoints.size() >= 4) {
+                Collections.sort(collinearPoints);
+                if (p == collinearPoints.get(0)) {
+                    temp.add(new LineSegment(p, collinearPoints.get(collinearPoints.size() - 1)));
                 }
             }
         }
