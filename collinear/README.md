@@ -17,5 +17,5 @@ javac -cp ".:../algs4.jar" Point.java BruteCollinearPoints.java
 Run BruteCollinearPoints
 
 ```sh
-java -cp ".:../algs4.jar" BruteCollinearPoints input8.txt
+java -cp ".:../algs4.jar" BruteCollinearPoints rs1423.txt
 ```
