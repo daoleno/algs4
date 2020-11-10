@@ -24,10 +24,8 @@ public class BruteCollinearPoints {
                 }
             }
         }
-        Point[] tempPoints = new Point[points.length];
-        for (int i = 0; i < points.length; i++) {
-            tempPoints[i] = points[i];
-        }
+        Point[] tempPoints = points.clone();
+       
         Arrays.sort(tempPoints);
         List<LineSegment> temp = new ArrayList<LineSegment>();
 
@@ -57,7 +55,7 @@ public class BruteCollinearPoints {
 
     // the line segments
     public LineSegment[] segments() {
-        return this.segments;
+        return this.segments.clone();
     }
 
     public static void main(String[] args) {

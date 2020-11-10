@@ -6,7 +6,6 @@ import java.util.List;
 import edu.princeton.cs.algs4.In;
 import edu.princeton.cs.algs4.StdDraw;
 import edu.princeton.cs.algs4.StdOut;
-import edu.princeton.cs.algs4.Selection;
 
 public class FastCollinearPoints {
     private LineSegment[] segments;
@@ -29,16 +28,21 @@ public class FastCollinearPoints {
 
         List<LineSegment> temp = new ArrayList<LineSegment>();
         List<Point> collinearPoints = new ArrayList<Point>();
-        // Point[] tempPoints = points.clone();
-        Point[] tempPoints = new Point[points.length];
-        for (int i = 0; i < points.length; i++) {
-            tempPoints[i] = points[i];
-        }
+        Point[] mutablePoints = points.clone();
+        Point[] tempPoints = points.clone();
+        // sort points
+        Arrays.sort(mutablePoints);
+        for (int pos = 0; pos < mutablePoints.length; pos++) {
+            Point p = mutablePoints[pos];
 
-        for (Point p : points) {
-            Selection.sort(tempPoints, p.slopeOrder());
+            // only sort points after pos
+            Arrays.sort(tempPoints, pos, mutablePoints.length, p.slopeOrder());
+
+            // reset collinearPoints
             collinearPoints.clear();
             collinearPoints.add(p);
+
+            // all points' slope will compare with curSlope
             double curSlope = p.slopeTo(tempPoints[0]);
             for (int i = 1; i < tempPoints.length; i++) {
                 if (p.slopeTo(tempPoints[i]) == curSlope) {
@@ -77,7 +81,7 @@ public class FastCollinearPoints {
 
     // the line segments
     public LineSegment[] segments() {
-        return this.segments;
+        return this.segments.clone();
 
     }
 
